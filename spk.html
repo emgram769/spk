@@ -1,0 +1,62 @@
+<html>
+<head>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+
+</head>
+<body>
+<textarea placeholder="Type whatever you want here" style="width:100%;border:none;outline:none;height:100%;font-size:16px;">
+</textarea>
+
+<script>
+
+var replacement_dict = 
+{
+please: "pls",
+fgt: "fegit",
+vncnt: "trtr",
+are: "r",
+you: "u",
+to: "3",
+fr: "5",
+why: "y",
+ths: "dis",
+brm: "brmbot spam",
+dye: "dy",
+kwn: "ky",
+kk: "kek",
+ll: "kek"
+}
+
+var triggers = [
+63, 46, 59, 32, 44, 40, 41, 45, 33
+]
+
+function translateText(value, obj) {
+	var words = value.split(" ");
+	var old_words = words.slice(0,-1);
+
+	var new_value = words[words.length - 1].replace(/(.)\1/g, "$1");
+	var old_value = '';
+	while (new_value != old_value) {
+		old_value = new_value;
+		new_value = old_value.replace(/([b-df-hj-np-tv-z])[aeiou]([b-df-hj-np-tv-z])/g, "$1$2");
+	}
+	
+	for (i in replacement_dict) {
+		new_value = new_value.replace(i, replacement_dict[i]);
+	}
+	
+	old_words.push(new_value);
+
+	$(obj).val(old_words.join(' '));
+}
+
+$('textarea').keypress(function(event){
+	if (triggers.indexOf(event.keyCode) > -1) {
+		translateText($(this).val(), this)
+	}
+	
+})
+</script>
+</body>
+</html>
